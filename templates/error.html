@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<div class="p-8 space-y-4"><h2 class="text-xl font-bold">{{message}}</h2><a class="button-outline" href="{{url_for('home')}}">홈으로</a></div>{% endblock %}{% block login_content %}<div class="p-8"><h2>{{message}}</h2><a href="{{url_for('login')}}">로그인으로</a></div>{% endblock %}

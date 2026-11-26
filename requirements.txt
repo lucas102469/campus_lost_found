@@ -1,0 +1,6 @@
+Flask>=3.1,<4
+Pillow>=11,<13
+python-dotenv>=1.0,<2
+tzdata>=2025.1
+requests>=2.32,<3
+truststore>=0.10.4,<1

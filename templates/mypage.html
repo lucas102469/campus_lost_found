@@ -1,0 +1,37 @@
+{% extends 'base.html' %}{% block content %}
+                <div class="w-full bg-white min-h-full p-6 space-y-6">
+                    <div class="max-w-4xl mx-auto space-y-6">
+                        
+                        <!-- 상단 프로필 요약 카드 -->
+                        <div class="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-2xl p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-white flex items-center justify-center text-2xl font-bold shadow-inner">
+                                    2
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h2 class="text-2xl font-bold">{{ display_name }}</h2>
+                                        <span class="px-2.5 py-0.5 bg-blue-500/40 border border-blue-400/30 text-blue-100 text-xs font-semibold rounded-full">학생</span>
+                                    </div>
+                                    <p class="text-blue-200 text-xs md:text-sm">학번: {{ me }} | 소속: 소프트웨어학과</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                                <button type="button" onclick="document.getElementById('name-editor').showModal()"  class="px-4 py-2 bg-white/10 hover:bg-white/20 transition rounded-xl text-xs font-semibold backdrop-blur-sm border border-white/20 flex items-center gap-2">
+                                    <i data-lucide="edit-3" class="w-4 h-4"></i> 이름 변경
+                                </button>
+                            </div>
+                        </div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div data-profile-card="lost" role="link" tabindex="0" onclick="location.href='{{url_for('my_items',kind='lost')}}'" onkeydown="if(event.key==='Enter'){this.click()}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition flex items-center justify-between"><div class="space-y-1"><p class="text-xs font-semibold text-slate-500">내가 등록한 분실물</p><p class="text-2xl font-extrabold text-blue-600">{{item_counts.lost}}건</p></div><div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="file-text" class="w-6 h-6"></i></div></div>
+<div data-profile-card="found" role="link" tabindex="0" onclick="location.href='{{url_for('my_items',kind='found')}}'" onkeydown="if(event.key==='Enter'){this.click()}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition flex items-center justify-between"><div class="space-y-1"><p class="text-xs font-semibold text-slate-500">내가 등록한 습득물</p><p class="text-2xl font-extrabold text-emerald-600">{{item_counts.found}}건</p></div><div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="camera" class="w-6 h-6"></i></div></div>
+<div data-profile-card="chat" role="link" tabindex="0" onclick="location.href='{{url_for('chat')}}'" onkeydown="if(event.key==='Enter'){this.click()}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition flex items-center justify-between"><div class="space-y-1"><p class="text-xs font-semibold text-slate-500">활성 채팅방</p><p class="text-2xl font-extrabold text-indigo-600">{{active_chats}}개</p></div><div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div></div>
+</div>
+<section id="account-settings" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
+<div class="p-4 bg-slate-50 font-bold text-xs text-slate-500 uppercase tracking-wider">계정 및 서비스 설정</div>
+<a href="{{url_for('notification_settings')}}" class="p-4 flex items-center justify-between hover:bg-slate-50 transition"><span class="flex items-center gap-3"><span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center"><i data-lucide="bell" class="w-4 h-4"></i></span><span class="font-semibold text-slate-800 text-sm">알림 설정</span></span><i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i></a>
+<a href="{{url_for('notifications')}}" class="p-4 flex items-center justify-between hover:bg-slate-50 transition"><span class="flex items-center gap-3"><span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center"><i data-lucide="list" class="w-4 h-4"></i></span><span class="font-semibold text-slate-800 text-sm">전체 알림 내역 보기</span></span><i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i></a>
+<form method="post" action="{{url_for('logout')}}"><input type="hidden" name="csrf_token" value="{{csrf_token}}"><button type="submit" class="w-full p-4 flex items-center justify-between hover:bg-red-50/50 transition text-red-600"><span class="flex items-center gap-3"><span class="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center"><i data-lucide="log-out" class="w-4 h-4"></i></span><span class="font-semibold text-sm">로그아웃</span></span><i data-lucide="chevron-right" class="w-4 h-4 text-red-400"></i></button></form>
+</section></div></div>
+            <dialog id="name-editor" class="rounded-2xl p-6 w-full max-w-sm shadow-xl"><form method="post" action="{{url_for('change_name')}}" class="space-y-4"><input type="hidden" name="csrf_token" value="{{csrf_token}}"><h3 class="text-lg font-bold">이름 변경</h3><label class="field-label" for="display-name">표시 이름</label><input class="field" id="display-name" name="display_name" value="{{display_name}}" maxlength="30" required><div class="flex gap-3"><button class="button-primary">저장</button><button type="button" class="button-outline" onclick="document.getElementById('name-editor').close()">취소</button></div></form></dialog>{% endblock %}
